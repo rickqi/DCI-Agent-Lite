@@ -126,6 +126,8 @@ Common variables:
 
 - `OPENAI_API_KEY` for OpenAI model runs and benchmark judging by default.
 - `ANTHROPIC_API_KEY` for Anthropic model runs.
+- `ZHIPU_API_KEY` for Zhipu AI model runs (GLM-5.1, GLM-5V-Turbo).
+- `DEEPSEEK_API_KEY` for DeepSeek model runs (V4-Pro, V4-Flash).
 
 <a name="quick-start"></a>
 ## ⚡ Quick Start
@@ -168,7 +170,33 @@ uv run dci-agent-lite \
 
 Programmatic runs save artifacts under `outputs/runs/<timestamp>/`. The final answer is in `final.txt`, the original question is in `question.txt`, and the full trajectory is in `conversation_full.json`. To choose a specific location, pass `--output-dir path/to/run`. 
 
-More runnable examples for OpenAI, Anthropic and vLLM are available in [`scripts/examples/`](scripts/examples/) as `dci_basic_*.sh`. See the [setup guide](assets/docs/setup.md#5-optional-configure-a-local-vllm-provider) for vLLM configuration.
+More runnable examples for OpenAI, Anthropic, Zhipu, DeepSeek and vLLM are available in [`scripts/examples/`](scripts/examples/) as `dci_basic_*.sh`. See the [setup guide](assets/docs/setup.md#5-optional-configure-a-local-vllm-provider) for vLLM configuration.
+
+### Using Zhipu AI or DeepSeek
+
+Both Zhipu AI and DeepSeek expose OpenAI-compatible APIs. They are pre-configured in `pi-mono/.pi/agent/models.json`. Set the corresponding API key in `.env`:
+
+```bash
+# Zhipu AI
+ZHIPU_API_KEY=your_zhipu_key_here
+
+# DeepSeek
+DEEPSEEK_API_KEY=your_deepseek_key_here
+```
+
+```bash
+# Zhipu GLM-5.1
+uv run dci-agent-lite --provider zhipu --model glm-5.1 \
+  --cwd "corpus/wiki_corpus" "your question"
+
+# DeepSeek V4 Flash
+uv run dci-agent-lite --provider deepseek --model deepseek-v4-flash \
+  --cwd "corpus/wiki_corpus" "your question"
+
+# DeepSeek V4 Pro
+uv run dci-agent-lite --provider deepseek --model deepseek-v4-pro \
+  --cwd "corpus/wiki_corpus" "your question"
+```
 
 
 ## 🚀 Context Management Strategies

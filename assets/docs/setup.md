@@ -125,6 +125,28 @@ If your local server ignores auth:
 export VLLM_API_KEY=dummy
 ```
 
+### 6. Optional: configure Zhipu AI or DeepSeek providers
+
+Both Zhipu AI and DeepSeek expose OpenAI-compatible APIs. They are pre-configured in `pi-mono/.pi/agent/models.json`. To use them, set the corresponding API key in `.env`:
+
+```bash
+# Zhipu AI (GLM-5.1, GLM-5V-Turbo)
+ZHIPU_API_KEY=your_zhipu_key_here
+
+# DeepSeek (DeepSeek-V4-Pro)
+DEEPSEEK_API_KEY=your_deepseek_key_here
+```
+
+Then run with the matching provider slug:
+
+```bash
+# Zhipu GLM-5.1
+uv run dci-agent-lite --provider zhipu --model glm-5.1 --cwd corpus/wiki_corpus "your question"
+
+# DeepSeek V4 Pro
+uv run dci-agent-lite --provider deepseek --model deepseek-v4-pro --cwd corpus/wiki_corpus "your question"
+```
+
 ## Data Preparation
 
 All benchmark datasets are downloaded from the [DCI-Agent/dci-bench](https://huggingface.co/datasets/DCI-Agent/dci-bench) HuggingFace dataset.
